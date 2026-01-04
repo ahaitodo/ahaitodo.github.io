@@ -1,0 +1,465 @@
+<!DOCTYPE html>                                                                              │ │
+│ │ <html lang="zh-CN">                                                                          │ │
+│ │ <head>                                                                                       │ │
+│ │     <meta charset="UTF-8">                                                                   │ │
+│ │     <meta name="viewport" content="width=device-width, initial-scale=1.0">                   │ │
+│ │     <title>俄罗斯方块</title>                                                                │ │
+│ │     <style>                                                                                  │ │
+│ │         body {                                                                               │ │
+│ │             margin: 0;                                                                       │ │
+│ │             padding: 0;                                                                      │ │
+│ │             display: flex;                                                                   │ │
+│ │             justify-content: center;                                                         │ │
+│ │             align-items: center;                                                             │ │
+│ │             min-height: 100vh;                                                               │ │
+│ │             background: #222;                                                                │ │
+│ │             font-family: Arial, sans-serif;                                                  │ │
+│ │             color: white;                                                                    │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-container {                                                                    │ │
+│ │             display: flex;                                                                   │ │
+│ │             gap: 20px;                                                                       │ │
+│ │             align-items: flex-start;                                                         │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-board {                                                                        │ │
+│ │             position: relative;                                                              │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         #gameCanvas {                                                                        │ │
+│ │             border: 2px solid #fff;                                                          │ │
+│ │             background: #000;                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .info-panel {                                                                        │ │
+│ │             display: flex;                                                                   │ │
+│ │             flex-direction: column;                                                          │ │
+│ │             gap: 20px;                                                                       │ │
+│ │             width: 150px;                                                                    │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .info-box {                                                                          │ │
+│ │             background: #333;                                                                │ │
+│ │             padding: 15px;                                                                   │ │
+│ │             border-radius: 5px;                                                              │ │
+│ │             border: 1px solid #555;                                                          │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .info-box h3 {                                                                       │ │
+│ │             margin: 0 0 10px 0;                                                              │ │
+│ │             font-size: 16px;                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .info-box p {                                                                        │ │
+│ │             margin: 5px 0;                                                                   │ │
+│ │             font-size: 14px;                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         #nextCanvas {                                                                        │ │
+│ │             border: 1px solid #555;                                                          │ │
+│ │             background: #111;                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .controls {                                                                          │ │
+│ │             background: #333;                                                                │ │
+│ │             padding: 15px;                                                                   │ │
+│ │             border-radius: 5px;                                                              │ │
+│ │             border: 1px solid #555;                                                          │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .controls h3 {                                                                       │ │
+│ │             margin: 0 0 10px 0;                                                              │ │
+│ │             font-size: 16px;                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .controls p {                                                                        │ │
+│ │             margin: 5px 0;                                                                   │ │
+│ │             font-size: 12px;                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-over {                                                                         │ │
+│ │             position: absolute;                                                              │ │
+│ │             top: 50%;                                                                        │ │
+│ │             left: 50%;                                                                       │ │
+│ │             transform: translate(-50%, -50%);                                                │ │
+│ │             background: rgba(0, 0, 0, 0.9);                                                  │ │
+│ │             color: white;                                                                    │ │
+│ │             padding: 30px;                                                                   │ │
+│ │             border-radius: 10px;                                                             │ │
+│ │             text-align: center;                                                              │ │
+│ │             display: none;                                                                   │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-over h2 {                                                                      │ │
+│ │             margin: 0 0 15px 0;                                                              │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-over button {                                                                  │ │
+│ │             background: #555;                                                                │ │
+│ │             color: white;                                                                    │ │
+│ │             border: none;                                                                    │ │
+│ │             padding: 10px 20px;                                                              │ │
+│ │             border-radius: 5px;                                                              │ │
+│ │             cursor: pointer;                                                                 │ │
+│ │             font-size: 14px;                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         .game-over button:hover {                                                            │ │
+│ │             background: #666;                                                                │ │
+│ │         }                                                                                    │ │
+│ │     </style>                                                                                 │ │
+│ │ </head>                                                                                      │ │
+│ │ <body>                                                                                       │ │
+│ │     <div class="game-container">                                                             │ │
+│ │         <div class="game-board">                                                             │ │
+│ │             <canvas id="gameCanvas" width="300" height="600"></canvas>                       │ │
+│ │             <div class="game-over" id="gameOver">                                            │ │
+│ │                 <h2>游戏结束</h2>                                                            │ │
+│ │                 <p>得分: <span id="finalScore">0</span></p>                                  │ │
+│ │                 <button onclick="startGame()">重新开始</button>                              │ │
+│ │             </div>                                                                           │ │
+│ │         </div>                                                                               │ │
+│ │                                                                                              │ │
+│ │         <div class="info-panel">                                                             │ │
+│ │             <div class="info-box">                                                           │ │
+│ │                 <h3>得分</h3>                                                                │ │
+│ │                 <p id="score">0</p>                                                          │ │
+│ │             </div>                                                                           │ │
+│ │                                                                                              │ │
+│ │             <div class="info-box">                                                           │ │
+│ │                 <h3>等级</h3>                                                                │ │
+│ │                 <p id="level">1</p>                                                          │ │
+│ │             </div>                                                                           │ │
+│ │                                                                                              │ │
+│ │             <div class="info-box">                                                           │ │
+│ │                 <h3>消除行数</h3>                                                            │ │
+│ │                 <p id="lines">0</p>                                                          │ │
+│ │             </div>                                                                           │ │
+│ │                                                                                              │ │
+│ │             <div class="info-box">                                                           │ │
+│ │                 <h3>下一个方块</h3>                                                          │ │
+│ │                 <canvas id="nextCanvas" width="120" height="80"></canvas>                    │ │
+│ │             </div>                                                                           │ │
+│ │                                                                                              │ │
+│ │             <div class="controls">                                                           │ │
+│ │                 <h3>操作说明</h3>                                                            │ │
+│ │                 <p>← → : 左右移动</p>                                                        │ │
+│ │                 <p>↓ : 加速下降</p>                                                          │ │
+│ │                 <p>↑ : 旋转</p>                                                              │ │
+│ │                 <p>空格 : 直接下降</p>                                                       │ │
+│ │                 <p>P : 暂停游戏</p>                                                          │ │
+│ │             </div>                                                                           │ │
+│ │         </div>                                                                               │ │
+│ │     </div>                                                                                   │ │
+│ │                                                                                              │ │
+│ │     <script>                                                                                 │ │
+│ │         const BOARD_WIDTH = 10;                                                              │ │
+│ │         const BOARD_HEIGHT = 20;                                                             │ │
+│ │         const BLOCK_SIZE = 30;                                                               │ │
+│ │                                                                                              │ │
+│ │         const canvas = document.getElementById('gameCanvas');                                │ │
+│ │         const ctx = canvas.getContext('2d');                                                 │ │
+│ │         const nextCanvas = document.getElementById('nextCanvas');                            │ │
+│ │         const nextCtx = nextCanvas.getContext('2d');                                         │ │
+│ │                                                                                              │ │
+│ │         let board = [];                                                                      │ │
+│ │         let currentPiece = null;                                                             │ │
+│ │         let nextPiece = null;                                                                │ │
+│ │         let score = 0;                                                                       │ │
+│ │         let level = 1;                                                                       │ │
+│ │         let lines = 0;                                                                       │ │
+│ │         let gameRunning = false;                                                             │ │
+│ │         let isPaused = false;                                                                │ │
+│ │         let dropTime = 0;                                                                    │ │
+│ │         let dropInterval = 1000;                                                             │ │
+│ │                                                                                              │ │
+│ │         const PIECES = [                                                                     │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [1, 1, 1, 1]                                                             │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#00ffff'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [1, 1],                                                                  │ │
+│ │                     [1, 1]                                                                   │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#ffff00'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [0, 1, 0],                                                               │ │
+│ │                     [1, 1, 1]                                                                │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#800080'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [1, 0, 0],                                                               │ │
+│ │                     [1, 1, 1]                                                                │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#ffa500'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [0, 0, 1],                                                               │ │
+│ │                     [1, 1, 1]                                                                │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#0000ff'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [1, 1, 0],                                                               │ │
+│ │                     [0, 1, 1]                                                                │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#00ff00'                                                             │ │
+│ │             },                                                                               │ │
+│ │             {                                                                                │ │
+│ │                 shape: [                                                                     │ │
+│ │                     [0, 1, 1],                                                               │ │
+│ │                     [1, 1, 0]                                                                │ │
+│ │                 ],                                                                           │ │
+│ │                 color: '#ff0000'                                                             │ │
+│ │             }                                                                                │ │
+│ │         ];                                                                                   │ │
+│ │                                                                                              │ │
+│ │         function initBoard() {                                                               │ │
+│ │             board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));        │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function drawBlock(ctx, x, y, color, size = BLOCK_SIZE) {                            │ │
+│ │             ctx.fillStyle = color;                                                           │ │
+│ │             ctx.fillRect(x * size, y * size, size, size);                                    │ │
+│ │             ctx.strokeStyle = '#333';                                                        │ │
+│ │             ctx.strokeRect(x * size, y * size, size, size);                                  │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function drawBoard() {                                                               │ │
+│ │             ctx.clearRect(0, 0, canvas.width, canvas.height);                                │ │
+│ │                                                                                              │ │
+│ │             for (let y = 0; y < BOARD_HEIGHT; y++) {                                         │ │
+│ │                 for (let x = 0; x < BOARD_WIDTH; x++) {                                      │ │
+│ │                     if (board[y][x]) {                                                       │ │
+│ │                         drawBlock(ctx, x, y, board[y][x]);                                   │ │
+│ │                     }                                                                        │ │
+│ │                 }                                                                            │ │
+│ │             }                                                                                │ │
+│ │                                                                                              │ │
+│ │             if (currentPiece) {                                                              │ │
+│ │                 drawPiece(ctx, currentPiece, BLOCK_SIZE);                                    │ │
+│ │             }                                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function drawPiece(ctx, piece, blockSize = BLOCK_SIZE) {                             │ │
+│ │             piece.shape.forEach((row, dy) => {                                               │ │
+│ │                 row.forEach((value, dx) => {                                                 │ │
+│ │                     if (value) {                                                             │ │
+│ │                         drawBlock(ctx, piece.x + dx, piece.y + dy, piece.color, blockSize);  │ │
+│ │                     }                                                                        │ │
+│ │                 });                                                                          │ │
+│ │             });                                                                              │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function drawNextPiece() {                                                           │ │
+│ │             nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);                    │ │
+│ │             if (nextPiece) {                                                                 │ │
+│ │                 const offsetX = Math.floor((4 - nextPiece.shape[0].length) / 2);             │ │
+│ │                 const offsetY = Math.floor((3 - nextPiece.shape.length) / 2);                │ │
+│ │                                                                                              │ │
+│ │                 nextPiece.shape.forEach((row, dy) => {                                       │ │
+│ │                     row.forEach((value, dx) => {                                             │ │
+│ │                         if (value) {                                                         │ │
+│ │                             drawBlock(nextCtx, offsetX + dx, offsetY + dy, nextPiece.color,  │ │
+│ │ 20);                                                                                         │ │
+│ │                         }                                                                    │ │
+│ │                     });                                                                      │ │
+│ │                 });                                                                          │ │
+│ │             }                                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function createPiece() {                                                             │ │
+│ │             const pieceType = PIECES[Math.floor(Math.random() * PIECES.length)];             │ │
+│ │             return {                                                                         │ │
+│ │                 x: Math.floor(BOARD_WIDTH / 2) - Math.floor(pieceType.shape[0].length / 2),  │ │
+│ │                 y: 0,                                                                        │ │
+│ │                 shape: pieceType.shape.map(row => [...row]),                                 │ │
+│ │                 color: pieceType.color                                                       │ │
+│ │             };                                                                               │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function isValidMove(piece, dx, dy, rotation) {                                      │ │
+│ │             const testPiece = {                                                              │ │
+│ │                 x: piece.x + dx,                                                             │ │
+│ │                 y: piece.y + dy,                                                             │ │
+│ │                 shape: rotation || piece.shape                                               │ │
+│ │             };                                                                               │ │
+│ │                                                                                              │ │
+│ │             return testPiece.shape.every((row, dy) => {                                      │ │
+│ │                 return row.every((value, dx) => {                                            │ │
+│ │                     if (!value) return true;                                                 │ │
+│ │                                                                                              │ │
+│ │                     const newX = testPiece.x + dx;                                           │ │
+│ │                     const newY = testPiece.y + dy;                                           │ │
+│ │                                                                                              │ │
+│ │                     return newX >= 0 &&                                                      │ │
+│ │                            newX < BOARD_WIDTH &&                                             │ │
+│ │                            newY < BOARD_HEIGHT &&                                            │ │
+│ │                            (newY < 0 || !board[newY][newX]);                                 │ │
+│ │                 });                                                                          │ │
+│ │             });                                                                              │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function rotatePiece(piece) {                                                        │ │
+│ │             const rotated = piece.shape[0].map((_, index) =>                                 │ │
+│ │                 piece.shape.map(row => row[index]).reverse()                                 │ │
+│ │             );                                                                               │ │
+│ │                                                                                              │ │
+│ │             if (isValidMove(piece, 0, 0, rotated)) {                                         │ │
+│ │                 piece.shape = rotated;                                                       │ │
+│ │             }                                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function placePiece() {                                                              │ │
+│ │             currentPiece.shape.forEach((row, dy) => {                                        │ │
+│ │                 row.forEach((value, dx) => {                                                 │ │
+│ │                     if (value) {                                                             │ │
+│ │                         const boardY = currentPiece.y + dy;                                  │ │
+│ │                         const boardX = currentPiece.x + dx;                                  │ │
+│ │                         if (boardY >= 0) {                                                   │ │
+│ │                             board[boardY][boardX] = currentPiece.color;                      │ │
+│ │                         }                                                                    │ │
+│ │                     }                                                                        │ │
+│ │                 });                                                                          │ │
+│ │             });                                                                              │ │
+│ │                                                                                              │ │
+│ │             clearLines();                                                                    │ │
+│ │             spawnNewPiece();                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function clearLines() {                                                              │ │
+│ │             let linesCleared = 0;                                                            │ │
+│ │                                                                                              │ │
+│ │             for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {                                    │ │
+│ │                 if (board[y].every(cell => cell !== 0)) {                                    │ │
+│ │                     board.splice(y, 1);                                                      │ │
+│ │                     board.unshift(Array(BOARD_WIDTH).fill(0));                               │ │
+│ │                     linesCleared++;                                                          │ │
+│ │                     y++;                                                                     │ │
+│ │                 }                                                                            │ │
+│ │             }                                                                                │ │
+│ │                                                                                              │ │
+│ │             if (linesCleared > 0) {                                                          │ │
+│ │                 lines += linesCleared;                                                       │ │
+│ │                 score += linesCleared * 100 * level;                                         │ │
+│ │                 level = Math.floor(lines / 10) + 1;                                          │ │
+│ │                 dropInterval = Math.max(50, 1000 - (level - 1) * 50);                        │ │
+│ │                                                                                              │ │
+│ │                 updateDisplay();                                                             │ │
+│ │             }                                                                                │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function spawnNewPiece() {                                                           │ │
+│ │             currentPiece = nextPiece || createPiece();                                       │ │
+│ │             nextPiece = createPiece();                                                       │ │
+│ │                                                                                              │ │
+│ │             if (!isValidMove(currentPiece, 0, 0)) {                                          │ │
+│ │                 gameOver();                                                                  │ │
+│ │             }                                                                                │ │
+│ │                                                                                              │ │
+│ │             drawNextPiece();                                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function gameOver() {                                                                │ │
+│ │             gameRunning = false;                                                             │ │
+│ │             document.getElementById('finalScore').textContent = score;                       │ │
+│ │             document.getElementById('gameOver').style.display = 'block';                     │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function updateDisplay() {                                                           │ │
+│ │             document.getElementById('score').textContent = score;                            │ │
+│ │             document.getElementById('level').textContent = level;                            │ │
+│ │             document.getElementById('lines').textContent = lines;                            │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function startGame() {                                                               │ │
+│ │             initBoard();                                                                     │ │
+│ │             currentPiece = null;                                                             │ │
+│ │             nextPiece = null;                                                                │ │
+│ │             score = 0;                                                                       │ │
+│ │             level = 1;                                                                       │ │
+│ │             lines = 0;                                                                       │ │
+│ │             gameRunning = true;                                                              │ │
+│ │             isPaused = false;                                                                │ │
+│ │             dropTime = 0;                                                                    │ │
+│ │             dropInterval = 1000;                                                             │ │
+│ │                                                                                              │ │
+│ │             document.getElementById('gameOver').style.display = 'none';                      │ │
+│ │             updateDisplay();                                                                 │ │
+│ │             spawnNewPiece();                                                                 │ │
+│ │             gameLoop();                                                                      │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         function gameLoop() {                                                                │ │
+│ │             if (!gameRunning || isPaused) return;                                            │ │
+│ │                                                                                              │ │
+│ │             const now = Date.now();                                                          │ │
+│ │             if (now - dropTime > dropInterval) {                                             │ │
+│ │                 if (currentPiece && isValidMove(currentPiece, 0, 1)) {                       │ │
+│ │                     currentPiece.y++;                                                        │ │
+│ │                 } else if (currentPiece) {                                                   │ │
+│ │                     placePiece();                                                            │ │
+│ │                 }                                                                            │ │
+│ │                 dropTime = now;                                                              │ │
+│ │             }                                                                                │ │
+│ │                                                                                              │ │
+│ │             drawBoard();                                                                     │ │
+│ │             requestAnimationFrame(gameLoop);                                                 │ │
+│ │         }                                                                                    │ │
+│ │                                                                                              │ │
+│ │         document.addEventListener('keydown', (e) => {                                        │ │
+│ │             if (!gameRunning || isPaused || !currentPiece) return;                           │ │
+│ │                                                                                              │ │
+│ │             switch(e.code) {                                                                 │ │
+│ │                 case 'ArrowLeft':                                                            │ │
+│ │                     if (isValidMove(currentPiece, -1, 0)) {                                  │ │
+│ │                         currentPiece.x--;                                                    │ │
+│ │                     }                                                                        │ │
+│ │                     break;                                                                   │ │
+│ │                 case 'ArrowRight':                                                           │ │
+│ │                     if (isValidMove(currentPiece, 1, 0)) {                                   │ │
+│ │                         currentPiece.x++;                                                    │ │
+│ │                     }                                                                        │ │
+│ │                     break;                                                                   │ │
+│ │                 case 'ArrowDown':                                                            │ │
+│ │                     if (isValidMove(currentPiece, 0, 1)) {                                   │ │
+│ │                         currentPiece.y++;                                                    │ │
+│ │                         score += 1;                                                          │ │
+│ │                         updateDisplay();                                                     │ │
+│ │                     }                                                                        │ │
+│ │                     break;                                                                   │ │
+│ │                 case 'ArrowUp':                                                              │ │
+│ │                     rotatePiece(currentPiece);                                               │ │
+│ │                     break;                                                                   │ │
+│ │                 case 'Space':                                                                │ │
+│ │                     while (isValidMove(currentPiece, 0, 1)) {                                │ │
+│ │                         currentPiece.y++;                                                    │ │
+│ │                         score += 2;                                                          │ │
+│ │                     }                                                                        │ │
+│ │                     updateDisplay();                                                         │ │
+│ │                     break;                                                                   │ │
+│ │                 case 'KeyP':                                                                 │ │
+│ │                     isPaused = !isPaused;                                                    │ │
+│ │                     if (!isPaused) gameLoop();                                               │ │
+│ │                     break;                                                                   │ │
+│ │             }                                                                                │ │
+│ │                                                                                              │ │
+│ │             drawBoard();                                                                     │ │
+│ │             e.preventDefault();                                                              │ │
+│ │         });                                                                                  │ │
+│ │                                                                                              │ │
+│ │         startGame();                                                                         │ │
+│ │     </script>                                                                                │ │
+│ │ </body>                                                                                      │ │
+│ │ </html>
