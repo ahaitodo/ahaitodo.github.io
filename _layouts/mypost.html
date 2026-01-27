@@ -17,6 +17,19 @@
   <div class="post">
     {{ content }}
   </div>
+  
+  <!-- Utterances 评论系统 -->
+  <div class="post-comments" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e1e4e8;">
+    <script src="https://utteranc.es/client.js"
+            repo="ahaitodo/ahaitodo.github.io"
+            issue-term="pathname"
+            label="comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
+  
   {% if site.extAdsense -%}
   <div class="adsense" style="overflow: hidden;">
     {% include ext-adsense.html -%}
