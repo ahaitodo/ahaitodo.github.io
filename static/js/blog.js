@@ -417,12 +417,12 @@ blog.addLoadEvent(function () {
   const $icon = $el.querySelector('.svg-icon')
 
   blog.removeClass($el, 'hide')
-  if (blog.darkMode) {
+  if (blog.darkTheme) {
     blog.removeClass($icon, 'icon-theme-light')
     blog.addClass($icon, 'icon-theme-dark')
   }
 
-  function initDarkMode(flag) {
+  function setDarkTheme(flag) {
     blog.removeClass($icon, 'icon-theme-light')
     blog.removeClass($icon, 'icon-theme-dark')
     if (flag === 'true') blog.addClass($icon, 'icon-theme-dark')
@@ -433,21 +433,22 @@ blog.addLoadEvent(function () {
       document.documentElement.removeAttribute('transition')
     }, 600)
 
-    blog.initDarkMode(flag)
+    blog.setDarkTheme(flag === 'true')
+    blog.darkTheme = flag === 'true'
   }
 
   blog.addEvent($el, 'click', function () {
-    const flag = blog.darkMode ? 'false' : 'true'
-    localStorage.darkMode = flag
-    initDarkMode(flag)
+    const flag = blog.darkTheme ? 'false' : 'true'
+    sessionStorage.darkTheme = flag
+    setDarkTheme(flag)
   })
 
   if (window.matchMedia) {
     window.matchMedia('(prefers-color-scheme: dark)').addListener(function (ev) {
       const systemDark = ev.target.matches
-      if (systemDark !== blog.darkMode) {
-        localStorage.darkMode = '' // 清除用户设置
-        initDarkMode(systemDark ? 'true' : 'false')
+      if (systemDark !== blog.darkTheme) {
+        sessionStorage.removeItem('darkTheme') // 清除用户设置
+        setDarkTheme(systemDark ? 'true' : 'false')
       }
     })
   }

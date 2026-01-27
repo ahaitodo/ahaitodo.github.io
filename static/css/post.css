@@ -151,6 +151,23 @@
 .page-post .table-container table tbody tr:last-child {
   border-bottom: 0;
 }
+.page-post .nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e4e8;
+}
+.page-post .nav > div {
+  max-width: 48%;
+}
+.page-post .nav .nav-next {
+  text-align: right;
+}
+.page-post .nav a {
+  color: #000000;
+  border-bottom: 1px solid #000000;
+}
 @media screen and (max-width: 560px) {
   .page-post {
     font-size: 13px;

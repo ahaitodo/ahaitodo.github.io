@@ -11,7 +11,7 @@ author: 阿海
 footerText: 'Copyright © 2026'
 
 # 这些不要动
-permalink: /posts/:year/:month/:day/:title.html
+permalink: /:year/:month/:day/:title.html
 kramdown:
   auto_ids: true
   input: GFM
