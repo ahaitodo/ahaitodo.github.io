@@ -18,16 +18,23 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: ahai.cc
+title: 阿海的技术博客
 email: ljh@qq.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "ahaitodo" # the subpath of your site, e.g. /blog
+  欢迎来到我的技术博客！在这里分享编程技术、开发经验和生活感悟。
+  专注于Web开发、前端技术、后端架构等领域的探索与实践。
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://ahaitodo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
 github_username:  ahaitodo
+
+# 社交媒体链接
+social_links:
+  - platform: github
+    user_url: "https://github.com/ahaitodo"
+    
+# 显示摘要
+show_excerpts: true
 
 # Build settings
 theme: minima
