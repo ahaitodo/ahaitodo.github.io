@@ -36,6 +36,10 @@ social_links:
 # 显示摘要
 show_excerpts: true
 
+# 评论系统配置 (使用 Utterances)
+comments:
+  enabled: true
+
 # Build settings
 theme: minima
 plugins:
