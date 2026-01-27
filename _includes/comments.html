@@ -1,0 +1,65 @@
+{% if site.comments.enabled %}
+<section class="post-comments">
+  <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e1e4e8;">
+    
+    {% if site.comments.provider == "giscus" %}
+      <!-- Giscus 评论系统 -->
+      <div id="giscus-comments">
+        <script src="https://giscus.app/client.js"
+                data-repo="{{ site.comments.giscus.repo }}"
+                data-repo-id="{{ site.comments.giscus.repo_id }}"
+                data-category="{{ site.comments.giscus.category }}"
+                data-category-id="{{ site.comments.giscus.category_id }}"
+                data-mapping="{{ site.comments.giscus.mapping }}"
+                data-strict="0"
+                data-reactions-enabled="{{ site.comments.giscus.reactions_enabled }}"
+                data-emit-metadata="{{ site.comments.giscus.emit_metadata }}"
+                data-input-position="top"
+                data-theme="{{ site.comments.giscus.theme }}"
+                data-lang="{{ site.comments.giscus.lang }}"
+                data-loading="lazy"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    
+    {% elsif site.comments.provider == "utterances" %}
+      <!-- Utterances 评论系统 -->
+      <div id="utterances-comments">
+        <script src="https://utteranc.es/client.js"
+                repo="{{ site.comments.utterances.repo }}"
+                issue-term="{{ site.comments.utterances.issue_term }}"
+                theme="{{ site.comments.utterances.theme }}"
+                label="{{ site.comments.utterances.label }}"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    
+    {% elsif site.comments.provider == "disqus" %}
+      <!-- Disqus 评论系统 -->
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = "{{ page.url | prepend: site.baseurl | prepend: site.url }}";
+          this.page.identifier = "{{ page.url }}";
+        };
+        
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://{{ site.comments.disqus.shortname }}.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>
+        要查看 <a href="https://disqus.com/?ref_noscript">Disqus</a> 评论，请启用 JavaScript
+      </noscript>
+    
+    {% else %}
+      <p style="text-align: center; color: #999;">评论功能暂未配置</p>
+    {% endif %}
+    
+  </div>
+</section>
+{% endif %}
