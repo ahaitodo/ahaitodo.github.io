@@ -1,66 +1,102 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+encoding: utf-8
 
-title: 阿海的技术博客
-email: ljh@qq.com
-description: >- # this means to ignore newlines until "baseurl:"
-  欢迎来到我的技术博客！在这里分享编程技术、开发经验和生活感悟。
-  专注于Web开发、前端技术、后端架构等领域的探索与实践。
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://ahaitodo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-#twitter_username: jekyllrb
-github_username:  ahaitodo
-
-# 社交媒体链接
-social_links:
-  - platform: github
-    user_url: "https://github.com/ahaitodo"
-    
-# 显示摘要
-show_excerpts: true
-
-# 评论系统配置 (使用 Utterances)
-comments:
-  enabled: true
-
-# Build settings
-theme: minima
 plugins:
-  - jekyll-feed
+  - jekyll-regex-replace
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+# SEO相关信息
+title: 阿海的技术博客
+description: 欢迎来到我的技术博客！在这里分享编程技术、开发经验和生活感悟
+keywords: 阿海,Blog,技术博客,Web开发,编程
+author: 阿海
+footerText: 'Copyright © 2026'
+
+# 这些不要动
+permalink: /posts/:year/:month/:day/:title.html
+kramdown:
+  auto_ids: true
+  input: GFM
+  syntax_highlighter: rouge
+exclude: ['CNAME', 'README.md', 'LICENSE', '_site', 'dist', 'Gemfile', 'Gemfile.lock', 'blog.sh']
+
+# 域名配置
+# baseurl配置,如果网站部署在根目录下的其他目录中，请设置为 /目录名
+domainUrl: 'https://ahaitodo.github.io'
+baseurl: ''
+
+# 吐个槽地址，会在chat页面中重定向到该地址
+tucaoUrl: https://support.qq.com/product/86335
+
+# 菜单
+# 必填字段 title: '文本' url: '链接'
+# 可选字段 target: '_blank' 新页面打开 
+menu:
+  - title: 首页
+    url: /
+  - title: 归类
+    url: /pages/categories.html
+  - title: 搜索
+    url: /pages/search.html
+  - title: 友链
+    url: /pages/links.html
+  - title: 留言
+    url: /pages/chat.html
+  - title: 关于
+    url: /pages/about.html
+
+# 点击页面文字冒出特效,不需要请设置为false
+extClickEffect: true
+
+# Google Adsense,不需要请设置为false
+# _includes/ext-adsense.html 里面修改为自己的配置
+extAdsense: false
+
+# 数学公式支持，比较影响加载速度,不需要请设置为false
+extMath: false
+
+# 显示访问量统计，由不蒜子提供服务
+extCount: false
+
+# 友情链接
+links:
+  - title: 文科中的技术宅
+    url: https://www.townwang.com
+  - title: Auuu Nya Blog
+    url: http://mu1er.cn
+  - title: 春风十里
+    url: https://www.geek-era.com
+  - title: 阿川的个人博客
+    url: https://achuan.io
+  - title: 魏文成博客
+    url: https://www.wwc.ren
+  - title: 06m
+    url: https://www.06m.me
+  - title: 达达知识
+    url: https://www.dadapush.com
+  - title: 祈雨的博客
+    url: https://wakzz.cn
+  - title: hongCYu’s Blog
+    url: https://hongcyu.cn
+  - title: Sorryfu
+    url: https://fushaolei.github.io
+  - title: 简单的人生笔记
+    url: https://yoyling.com
+  - title: 郭大侠的博客
+    url: https://www.guozhenyi.com
+  - title: Py's Whisper
+    url: https://whisper.pyliubaolin.top
+  - title: Yuyao's Blog
+    url: http://hellocode.ink
+  - title: 木叶的博客
+    url: https://muye.ml
+  - title: Stansec
+    url: https://standeblog.com
+  - title: Wenn的个人博客
+    url: https://wenn.tech
+  - title: Congbo's Blog
+    url: https://congbo.site
+  - title: 咕咚同学
+    url: https://gudong.site
+  - title: Chemcat Blog
+    url: https://chemcat.gitee.io
+  - title: 大葱博客
+    url: https://blog.zzzdc.com/
