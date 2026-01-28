@@ -23,19 +23,39 @@ if ($hasChanges) {
 }
 
 Write-Host "🔄 正在同步远程仓库..." -ForegroundColor Cyan
-git pull origin main --rebase
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ 拉取失败，请检查冲突" -ForegroundColor Red
-    exit 1
-}
+# 检查网络连接
+try {
+    $response = Invoke-WebRequest -Uri "https://github.com" -TimeoutSec 10 -UseBasicParsing
+    if ($response.StatusCode -eq 200) {
+        Write-Host "🌐 网络连接正常" -ForegroundColor Green
+        
+        # 执行拉取操作
+        git pull origin main --rebase
 
-Write-Host "🚀 正在推送到 GitHub..." -ForegroundColor Cyan
-git push origin main
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "❌ 拉取失败，请检查冲突" -ForegroundColor Red
+            exit 1
+        }
 
-if ($LASTEXITCODE -eq 0) {
-    Write-Host "✅ 推送成功！" -ForegroundColor Green
-} else {
-    Write-Host "❌ 推送失败" -ForegroundColor Red
+        Write-Host "🚀 正在推送到 GitHub..." -ForegroundColor Cyan
+        git push origin main
+
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "✅ 推送成功！" -ForegroundColor Green
+        } else {
+            Write-Host "❌ 推送失败" -ForegroundColor Red
+            exit 1
+        }
+    }
+} catch {
+    Write-Host "⚠️  网络连接异常，请检查网络连接后重试" -ForegroundColor Yellow
+    Write-Host "💡  可能的原因：" -ForegroundColor Yellow
+    Write-Host "   - 网络不稳定" -ForegroundColor Yellow
+    Write-Host "   - GitHub 服务器暂时不可达" -ForegroundColor Yellow
+    Write-Host "   - 防火墙或代理设置问题" -ForegroundColor Yellow
+    Write-Host "💡  建议稍后重试或手动执行：" -ForegroundColor Yellow
+    Write-Host "   git pull origin main" -ForegroundColor Yellow
+    Write-Host "   git push origin main" -ForegroundColor Yellow
     exit 1
 }
