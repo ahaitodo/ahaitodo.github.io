@@ -17,14 +17,27 @@
   <div class="post">
     {{ content }}
   </div>
+
+  <div class="nav">
+    <div>
+      {% if page.next.url %}
+      <a href="{{ site.baseurl }}{{ page.next.url }}">&laquo;&nbsp;{{ page.next.title }}</a>
+      {% endif %}
+    </div>
+    <div class="nav-next">
+      {% if page.previous.url %}
+      <a href="{{ site.baseurl }}{{ page.previous.url }}">{{ page.previous.title }}&nbsp;&raquo;</a>
+      {% endif %}
+    </div>
+  </div>
   
   <!-- Utterances 评论系统 -->
   <div class="post-comments" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e1e4e8;">
     <script src="https://utteranc.es/client.js"
             repo="ahaitodo/ahaitodo.github.io"
             issue-term="pathname"
-            label="comment"
-            theme="github-light"
+            label="dong..."
+            theme="boxy-light"
             crossorigin="anonymous"
             async>
     </script>
