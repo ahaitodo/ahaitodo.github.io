@@ -1,0 +1,924 @@
+---
+layout: mypost
+title: 友情链接
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精创冷云设备数据汇总报表</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 30px; width: 98%; max-width: 1400px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); margin-top: 10px; }
+        .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #667eea; }
+        .header h1 { font-size: 2.2rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; font-weight: 800; }
+        .header .subtitle { font-size: 1.2rem; color: #666; margin-top: 5px; }
+        .last-data { background: linear-gradient(90deg, #e6f7ff, #f0f8ff); border-radius: 12px; padding: 15px 20px; margin-bottom: 25px; text-align: center; border-left: 5px solid #1890ff; font-size: 1.1rem; color: #333; }
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #667eea; margin-bottom: 5px; }
+        .stat-label { font-size: 0.9rem; color: #666; }
+        .table-container { overflow-x: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15); }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 1000px; }
+        thead { background: linear-gradient(90deg, #667eea, #764ba2); color: white; position: sticky; top: 0; }
+        th { padding: 18px 15px; text-align: center; font-size: 1rem; font-weight: 600; letter-spacing: 0.3px; border-right: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; }
+        th:last-child { border-right: none; }
+        tbody tr { transition: all 0.3s ease; border-bottom: 1px solid #eee; }
+        tbody tr:nth-child(even) { background-color: #f8f9ff; }
+        tbody tr:hover { background-color: #eef2ff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1); }
+        td { padding: 16px 15px; font-size: 0.95rem; color: #333; text-align: center; border-right: 1px solid #eee; white-space: nowrap; }
+        td:last-child { border-right: none; }
+        .date-cell { font-weight: 600; color: #555; }
+        .time-cell { color: #777; font-family: monospace; }
+        .device-cell { font-weight: 600; color: #667eea; }
+        .humidity-cell { font-weight: 700; color: #3182ce; }
+        .temperature-cell { font-weight: 700; color: #e53e3e; }
+        .unknown-cell { color: #999; font-style: italic; }
+        .footer { margin-top: 35px; text-align: center; color: #666; font-size: 0.85rem; padding-top: 15px; border-top: 1px solid #eee; }
+        .footer a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .footer a:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8rem; }
+            .stats-container { grid-template-columns: 1fr; }
+            th, td { padding: 12px 8px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>精创冷云设备数据汇总报表</h1>
+            <div class="subtitle">一行显示一封邮件的数据 | 不是实时记录</div>
+        </div>
+        
+        <div class="last-data">
+            <strong>📌 最后数据：</strong> 
+            2026-02-04 07:00:02 - 会议室8: 17.3°C, 41.8%
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">117</div>
+                <div class="stat-label">总邮件数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">设备种类</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">117/117</div>
+                <div class="stat-label">有效湿度记录</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">117/117</div>
+                <div class="stat-label">有效温度记录</div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>设备</th>
+                        <th>湿度</th>
+                        <th>温度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="date-cell">2026-02-04</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">41.8%</td>
+                        <td class="temperature-cell">17.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-04</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.7%</td>
+                        <td class="temperature-cell">21.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-04</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.0%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">41.3%</td>
+                        <td class="temperature-cell">17.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">38.5%</td>
+                        <td class="temperature-cell">24.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.3%</td>
+                        <td class="temperature-cell">20.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">41.3%</td>
+                        <td class="temperature-cell">17.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">40.7%</td>
+                        <td class="temperature-cell">22.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">41.2%</td>
+                        <td class="temperature-cell">19.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">42.5%</td>
+                        <td class="temperature-cell">16.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">42.2%</td>
+                        <td class="temperature-cell">19.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-03</td>
+                        <td class="time-cell">07:00:00</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.6%</td>
+                        <td class="temperature-cell">18.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">40.0%</td>
+                        <td class="temperature-cell">17.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">42.2%</td>
+                        <td class="temperature-cell">20.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.8%</td>
+                        <td class="temperature-cell">18.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">42.8%</td>
+                        <td class="temperature-cell">17.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.4%</td>
+                        <td class="temperature-cell">19.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">35.8%</td>
+                        <td class="temperature-cell">19.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">48.2%</td>
+                        <td class="temperature-cell">16.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">38.9%</td>
+                        <td class="temperature-cell">17.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-02</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.3%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">42.5%</td>
+                        <td class="temperature-cell">17.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.1%</td>
+                        <td class="temperature-cell">19.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.4%</td>
+                        <td class="temperature-cell">18.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">40.8%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.3%</td>
+                        <td class="temperature-cell">19.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.6%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">47.8%</td>
+                        <td class="temperature-cell">17.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">40.3%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-02-01</td>
+                        <td class="time-cell">07:00:00</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.0%</td>
+                        <td class="temperature-cell">17.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">41.5%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">42.9%</td>
+                        <td class="temperature-cell">20.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.5%</td>
+                        <td class="temperature-cell">19.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">44.4%</td>
+                        <td class="temperature-cell">18.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">42.9%</td>
+                        <td class="temperature-cell">20.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">15:00:00</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">41.6%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.5%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">40.0%</td>
+                        <td class="temperature-cell">22.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-31</td>
+                        <td class="time-cell">07:00:00</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">44.7%</td>
+                        <td class="temperature-cell">20.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">47.3%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.1%</td>
+                        <td class="temperature-cell">26.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">22:00:00</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.8%</td>
+                        <td class="temperature-cell">19.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">46.6%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.6%</td>
+                        <td class="temperature-cell">26.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">38.8%</td>
+                        <td class="temperature-cell">19.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">43.2%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.6%</td>
+                        <td class="temperature-cell">22.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-30</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.1%</td>
+                        <td class="temperature-cell">20.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.5%</td>
+                        <td class="temperature-cell">18.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">22:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.7%</td>
+                        <td class="temperature-cell">25.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">37.9%</td>
+                        <td class="temperature-cell">19.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">15:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.2%</td>
+                        <td class="temperature-cell">18.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">46.9%</td>
+                        <td class="temperature-cell">25.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">37.2%</td>
+                        <td class="temperature-cell">19.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">42.5%</td>
+                        <td class="temperature-cell">17.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.1%</td>
+                        <td class="temperature-cell">22.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-29</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">43.0%</td>
+                        <td class="temperature-cell">20.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">22:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">44.1%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.4%</td>
+                        <td class="temperature-cell">25.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.6%</td>
+                        <td class="temperature-cell">20.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">15:00:06</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">43.3%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">15:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.0%</td>
+                        <td class="temperature-cell">24.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.5%</td>
+                        <td class="temperature-cell">21.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">07:00:04</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">40.9%</td>
+                        <td class="temperature-cell">18.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">40.2%</td>
+                        <td class="temperature-cell">21.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-28</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.8%</td>
+                        <td class="temperature-cell">19.9°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">22:00:06</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">44.9%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.0%</td>
+                        <td class="temperature-cell">26.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">38.2%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">15:00:53</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">44.1%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">15:00:30</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">44.2%</td>
+                        <td class="temperature-cell">27.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.3%</td>
+                        <td class="temperature-cell">19.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">07:00:25</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">43.5%</td>
+                        <td class="temperature-cell">17.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">07:00:06</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.0%</td>
+                        <td class="temperature-cell">21.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-27</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">41.4%</td>
+                        <td class="temperature-cell">18.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">22:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.2%</td>
+                        <td class="temperature-cell">18.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">22:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.1%</td>
+                        <td class="temperature-cell">26.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.5%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">15:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">46.0%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">15:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">50.4%</td>
+                        <td class="temperature-cell">23.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.9%</td>
+                        <td class="temperature-cell">19.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">07:00:04</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">46.8%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.0%</td>
+                        <td class="temperature-cell">19.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-26</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">42.4%</td>
+                        <td class="temperature-cell">18.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">22:00:06</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">41.6%</td>
+                        <td class="temperature-cell">17.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.6%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.8%</td>
+                        <td class="temperature-cell">18.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">15:00:27</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">46.8%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">15:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">44.1%</td>
+                        <td class="temperature-cell">19.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">15:00:02</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.6%</td>
+                        <td class="temperature-cell">19.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">07:00:04</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">53.2%</td>
+                        <td class="temperature-cell">16.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">42.3%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-25</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.5%</td>
+                        <td class="temperature-cell">17.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">22:00:06</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">54.9%</td>
+                        <td class="temperature-cell">17.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">43.5%</td>
+                        <td class="temperature-cell">19.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.4%</td>
+                        <td class="temperature-cell">18.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">15:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.5%</td>
+                        <td class="temperature-cell">16.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">15:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">41.9%</td>
+                        <td class="temperature-cell">19.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">38.8%</td>
+                        <td class="temperature-cell">18.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">07:00:04</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">47.2%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">07:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">36.4%</td>
+                        <td class="temperature-cell">17.3°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-24</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.1%</td>
+                        <td class="temperature-cell">16.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">22:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">47.1%</td>
+                        <td class="temperature-cell">17.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">22:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">35.3%</td>
+                        <td class="temperature-cell">19.0°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">40.0%</td>
+                        <td class="temperature-cell">17.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">15:01:23</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">53.3%</td>
+                        <td class="temperature-cell">16.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">15:00:35</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">35.8%</td>
+                        <td class="temperature-cell">19.6°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">39.5%</td>
+                        <td class="temperature-cell">16.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">07:00:04</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">44.2%</td>
+                        <td class="temperature-cell">16.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">07:00:02</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">34.2%</td>
+                        <td class="temperature-cell">18.4°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-23</td>
+                        <td class="time-cell">07:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">38.3%</td>
+                        <td class="temperature-cell">16.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">22:00:10</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">50.8%</td>
+                        <td class="temperature-cell">17.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">22:00:03</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">32.8%</td>
+                        <td class="temperature-cell">19.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">22:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">37.7%</td>
+                        <td class="temperature-cell">17.5°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">15:00:05</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">51.0%</td>
+                        <td class="temperature-cell">17.1°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">15:00:04</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">37.6%</td>
+                        <td class="temperature-cell">18.7°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-01-22</td>
+                        <td class="time-cell">15:00:01</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">41.0%</td>
+                        <td class="temperature-cell">17.7°C</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>数据来源：精创冷云&lt;jccloud@i-elitech.cn&gt; 设备数据整点播报邮件</p>
+            <p>采集时间：2026-02-04 11:42:34 | 技术支持：Clawdbot </p>
+            <p>© 2026 精创冷云设备监控系统 | 共117封邮件数据</p>
+        </div>
+    </div>
+</body>
+</html>
