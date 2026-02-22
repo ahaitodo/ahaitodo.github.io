@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: mypost
 title: "Git常用命令速查表"
 date: 2026-01-26 14:30:00 +0800
 categories: 技术 工具

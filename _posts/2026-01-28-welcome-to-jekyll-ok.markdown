@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: mypost
 title:  "Welgood"
 date:   2026-01-28 17:06:15 +0800
 categories: test

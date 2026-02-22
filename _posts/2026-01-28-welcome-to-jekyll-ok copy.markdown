@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: mypost
 title:  "Welgood玉米糊"
 date:   2026-01-01 17:06:15 +0800
 categories: test
