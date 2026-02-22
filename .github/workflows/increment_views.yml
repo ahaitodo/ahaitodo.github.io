@@ -1,0 +1,29 @@
+name: Increment Views
+
+on:
+  workflow_dispatch:
+    inputs:
+      page:
+        description: 'Page path to increment (e.g. /2026/02/22/chunjie.html)'
+        required: true
+
+jobs:
+  increment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Increment view count
+        run: |
+          python3 .github/scripts/increment_views.py "$GITHUB_WORKSPACE/static/data/views.json" "${{ github.event.inputs.page }}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add static/data/views.json
+          git commit -m "chore: increment view for ${{ github.event.inputs.page }}" || echo "no changes"
+          git push

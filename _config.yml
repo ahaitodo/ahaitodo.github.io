@@ -56,6 +56,12 @@ extMath: false
 # 显示访问量统计，由不蒜子提供服务
 extCount: true
 
+# GitHub-based views storage (optional incremental API not provided here).
+# Set `viewsApi` to your server-side proxy endpoint that triggers the
+# `increment_views` workflow securely (server uses a GitHub token).
+viewsApi: ''
+
+
 # 友情链接
 links:
   - title: 极简网络剪贴板
