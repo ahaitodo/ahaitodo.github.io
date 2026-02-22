@@ -23,3 +23,25 @@
 {%- if site.extCount %}
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 {% endif %}
+
+{%- if site.extCount %}
+<script>
+  // Fallback: if busuanzi didn't populate counts after 2.5s, keep a safe `0` value
+  (function () {
+    function isNumberText(s) {
+      return typeof s === 'string' && /\d+/.test(s.trim());
+    }
+    function ensureCounts() {
+      try {
+        var page = document.getElementById('busuanzi_value_page_pv');
+        var site = document.getElementById('busuanzi_value_site_pv');
+        if (page && !isNumberText(page.textContent)) page.textContent = '0';
+        if (site && !isNumberText(site.textContent)) site.textContent = '0';
+      } catch (e) {}
+    }
+    // check a couple times in case script loads slowly
+    setTimeout(ensureCounts, 1200);
+    setTimeout(ensureCounts, 2500);
+  })();
+</script>
+{%- endif %}
