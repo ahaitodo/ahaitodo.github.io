@@ -1,7 +1,7 @@
 ---
 layout: mypost
 author: 阿海
-title: "春节就这么过了"
+title: "春节就这么过好了"
 date: 2026-02-22 10:00:00 +0800
 categories: 随笔
 ---
