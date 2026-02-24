@@ -121,6 +121,10 @@ input:-webkit-autofill {
   user-select: none;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   transition: transform 500ms ease-in-out;
+  background-image: url('../img/logo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .header .logo:hover {
   transform: rotate(360deg);
