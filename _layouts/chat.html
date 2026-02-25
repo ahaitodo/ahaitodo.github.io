@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% include head.html -%}
+<body>
+{% include header.html -%}
+<div class="page page-post">
+  <h1 class="title" id="{{ page.title }}">{{ page.title }}</h1>
+  {% if page.date %}
+  <div class="subtitle">
+    <span>{{site.author}} 于 {{ page.date | date: "%Y-%m-%d" }} 发布</span>
+  </div>
+  {% endif %}
+  <div class="post">
+    {{ content }}
+  </div>
+
+  <div class="nav">
+  </div>
+  
+  <!-- Utterances 评论系统 -->
+  <div class="post-comments" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e1e4e8;">
+    <script src="https://utteranc.es/client.js"
+            repo="ahaitodo/ahaitodo.github.io"
+            issue-term="pathname"
+            label="dong..."
+            theme="boxy-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
+  
+  {% if site.extAdsense -%}
+  <div class="adsense" style="overflow: hidden;">
+    {% include ext-adsense.html -%}
+  </div>
+  {% endif %}
+</div>
+{% include footer.html -%}
+{% include script.html -%}
+</body>
+</html>
