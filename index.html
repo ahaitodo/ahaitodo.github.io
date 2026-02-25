@@ -2,6 +2,20 @@
 layout: page
 title: 首页
 ---
+<div class="page page-search">
+  <input id="search-input" type="text" placeholder="请在这里输入关键词^_^"></input>
+  <ul class="list-search">
+    {%- for post in site.posts %}
+    <li hidden>
+      <a href="{{site.baseurl}}{{ post.url }}">
+        <p class="title">{{ post.title }}</p>
+        <p class="content"></p>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</div>
+
 <div class="page page-index">
   {% for post in site.posts  -%}
     {%- capture post_year %}{{ post.date | date: "%Y" }}{% endcapture -%}
