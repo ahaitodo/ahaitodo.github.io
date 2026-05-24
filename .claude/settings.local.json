@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.sjeq.com)",
+      "WebSearch",
+      "Bash(curl -L -s \"https://www.sjeq.com/?id=1\")",
+      "Bash(curl -L -s \"https://www.sjeq.com/?id=3\")",
+      "Bash(curl -L -s \"https://www.sjeq.com/?cate=2\")",
+      "Bash(curl -L -s \"https://www.sjeq.com/?cate=1\")",
+      "Bash(curl -L -s \"https://www.sjeq.com/?cate=2&page=2\")",
+      "Bash(python migrate_sjeq.py)",
+      "Bash(timeout 60 python -c \"import time; time.sleep\\(60\\)\")",
+      "Bash(timeout 90 python -c \"import time; time.sleep\\(90\\)\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=3\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=4\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=6\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=10\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=12\")",
+      "Bash(curl -L -s --max-time 60 \"https://www.sjeq.com/?id=21\")"
+    ]
+  }
+}
