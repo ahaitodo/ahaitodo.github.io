@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>精创冷云设备数据汇总报表</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255, 255, 255, 0.95); border-radius: 15px; padding: 15px; width: 100%; max-width: 1000px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px); margin-top: 10px; }
+        .header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #667eea; }
+        .header h1 { font-size: 1.6rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; font-weight: 700; }
+        .header .subtitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
+        .last-data { background: linear-gradient(90deg, #e6f7ff, #f0f8ff); border-radius: 10px; padding: 12px; margin-bottom: 20px; text-align: center; border-left: 4px solid #1890ff; font-size: 1rem; color: #333; word-break: break-word; }
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #667eea; margin-bottom: 5px; }
+        .stat-label { font-size: 0.8rem; color: #666; }
+        .table-container { overflow-x: auto; border-radius: 12px; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1); margin-bottom: 20px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 600px; }
+        thead { background: linear-gradient(90deg, #667eea, #764ba2); color: white; position: sticky; top: 0; }
+        th { padding: 14px 10px; text-align: center; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.3px; border-right: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; }
+        th:last-child { border-right: none; }
+        tbody tr { transition: all 0.3s ease; border-bottom: 1px solid #eee; }
+        tbody tr:nth-child(even) { background-color: #f8f9ff; }
+        tbody tr:hover { background-color: #eef2ff; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(102, 126, 234, 0.1); }
+        td { padding: 12px 10px; font-size: 0.9rem; color: #333; text-align: center; border-right: 1px solid #eee; white-space: nowrap; }
+        td:last-child { border-right: none; }
+        .date-cell { font-weight: 600; color: #555; font-size: 0.85rem; }
+        .time-cell { color: #777; font-family: monospace; font-size: 0.85rem; }
+        .device-cell { font-weight: 600; color: #667eea; font-size: 0.9rem; }
+        .humidity-cell { font-weight: 700; color: #3182ce; }
+        .temperature-cell { font-weight: 700; color: #e53e3e; }
+        .unknown-cell { color: #999; font-style: italic; }
+        .footer { margin-top: 20px; text-align: center; color: #666; font-size: 0.75rem; padding-top: 15px; border-top: 1px solid #eee; }
+        .footer a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body { padding: 5px; }
+            .container { padding: 12px; border-radius: 12px; }
+            .header h1 { font-size: 1.4rem; }
+            .header .subtitle { font-size: 0.8rem; }
+            .last-data { font-size: 0.9rem; padding: 10px; }
+            .stat-value { font-size: 1.3rem; }
+            .stat-label { font-size: 0.75rem; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            th, td { padding: 10px 8px; font-size: 0.85rem; }
+            .date-cell, .time-cell { font-size: 0.8rem; }
+            .device-cell { font-size: 0.85rem; }
+            .footer { font-size: 0.7rem; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.3rem; }
+            table { min-width: 500px; }
+            th, td { padding: 8px 6px; font-size: 0.8rem; }
+            .date-cell, .time-cell, .device-cell { font-size: 0.75rem; }
+            .stat-value { font-size: 1.2rem; }
+        }
+
+        /* 卡片式布局选项 */
+        .card-view { display: none; }
+        .toggle-btn { margin: 10px 0; padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+
+        @media (max-width: 600px) {
+            .table-view { display: none; }
+            .card-view { display: block; }
+
+            .card-item {
+                background: white;
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 12px;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                border-left: 4px solid #667eea;
+            }
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #eee;
+            }
+            .card-date-time { font-weight: 600; color: #555; font-size: 0.9rem; }
+            .card-device { font-weight: 700; color: #667eea; font-size: 1rem; }
+            .card-data { display: flex; justify-content: space-around; }
+            .card-data-item { text-align: center; }
+            .card-data-label { font-size: 0.8rem; color: #666; margin-bottom: 3px; }
+            .card-data-value { font-weight: 700; }
+            .humidity-value { color: #3182ce; }
+            .temperature-value { color: #e53e3e; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>机房湿度温巡检汇总报表</h1>
+            <div class="subtitle">各个设备每天3条数据供对比</div>
+        </div>
+
+        <div class="last-data">
+            <strong>📌 最后数据：</strong>
+            2026-06-02 14:01:30 - 会议室8: 24.8°C, 45.7%
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">总数据条数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">设备种类</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6/6</div>
+                <div class="stat-label">有效湿度记录</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6/6</div>
+                <div class="stat-label">有效温度记录</div>
+            </div>
+        </div>
+
+        <!-- 卡片视图（移动端） -->
+        <div class="card-view">
+            
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 14:01:30</div>
+                    <div class="card-device">会议室8</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">45.7%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">24.8°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 13:56:30</div>
+                    <div class="card-device">机房NLY</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">45.2%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">21.2°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 12:11:30</div>
+                    <div class="card-device">会议室8</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">46.0%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">24.2°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 12:11:30</div>
+                    <div class="card-device">机房NLY</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">45.3%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">21.8°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 12:06:30</div>
+                    <div class="card-device">机房NLY</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">45.7%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">21.8°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="card-date-time">2026-06-02 11:01:30</div>
+                    <div class="card-device">机房YWXK</div>
+                </div>
+                <div class="card-data">
+                    <div class="card-data-item">
+                        <div class="card-data-label">湿度</div>
+                        <div class="card-data-value humidity-value">48.0%</div>
+                    </div>
+                    <div class="card-data-item">
+                        <div class="card-data-label">温度</div>
+                        <div class="card-data-value temperature-value">25.2°C</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 表格视图（桌面端） -->
+        <div class="table-container table-view">
+            <table>
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>设备</th>
+                        <th>湿度</th>
+                        <th>温度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                        <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">14:01:30</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">45.7%</td>
+                        <td class="temperature-cell">24.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">13:56:30</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.2%</td>
+                        <td class="temperature-cell">21.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">12:11:30</td>
+                        <td class="device-cell">会议室8</td>
+                        <td class="humidity-cell">46.0%</td>
+                        <td class="temperature-cell">24.2°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">12:11:30</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.3%</td>
+                        <td class="temperature-cell">21.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">12:06:30</td>
+                        <td class="device-cell">机房NLY</td>
+                        <td class="humidity-cell">45.7%</td>
+                        <td class="temperature-cell">21.8°C</td>
+                    </tr>
+                    <tr>
+                        <td class="date-cell">2026-06-02</td>
+                        <td class="time-cell">11:01:30</td>
+                        <td class="device-cell">机房YWXK</td>
+                        <td class="humidity-cell">48.0%</td>
+                        <td class="temperature-cell">25.2°C</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>数据来源: 精创冷云 API (www.i-elitech.net)</p>
+            <p>Generated by JCCloud API Fetcher | <a href="https://www.i-elitech.net/device/list" target="_blank">前往控制台</a></p>
+            <p>© 2026 精创冷云设备监控系统 | 共6条数据</p>
+            <p>更新时间: 2026-06-02 14:04:20</p>
+        </div>
+    </div>
+
+    <script>
+        // 移动端检测并切换视图
+        function checkDeviceAndSwitchView() {
+            const isMobile = window.innerWidth <= 600;
+            const tableView = document.querySelector('.table-view');
+            const cardView = document.querySelector('.card-view');
+
+            if (isMobile && cardView) {
+                tableView.style.display = 'none';
+                cardView.style.display = 'block';
+            } else if (!isMobile && tableView) {
+                tableView.style.display = 'block';
+                if (cardView) cardView.style.display = 'none';
+            }
+        }
+
+        // 页面加载时检测
+        checkDeviceAndSwitchView();
+
+        // 窗口大小改变时重新检测
+        window.addEventListener('resize', checkDeviceAndSwitchView);
+    </script>
+</body>
+</html>
