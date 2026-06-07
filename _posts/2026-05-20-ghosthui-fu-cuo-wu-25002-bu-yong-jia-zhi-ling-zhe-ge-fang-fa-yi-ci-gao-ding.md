@@ -1,9 +1,9 @@
 ---
-layout: post
+layout: mypost
 title: "Ghost恢复错误25002？不用加指令，这个方法一次搞定！"
 date: 2026-05-20
 categories: 默认分类
-tags: []
+tags: [ghost]
 ---
 
 ## **问题表现：**
@@ -48,16 +48,6 @@ tags: []
 
 [ ](javascript:handleLike\('807f1e38-1c29-4e98-8614-7715f2e524ed'\))
 
-#### Recommended
 
-2026-02-05 [干活牛马，除了openclaw还有国产的这款工具能帮你更快干活](/archives/use-openclaw-to-aipy-yaoqingma-jpU6)
-
-2025-09-18 [windows快速导出导入打印机](/archives/windowskuai-su-dao-chu-dao-ru-da-yin-ji)
-
-2025-08-10 [用DiskGenius备份还原windows系统分区](/archives/yong-diskgeniusbei-fen-huan-yuan-windowsxi-tong-fen-qu)
-
-Prev Post [🔥 腾讯云2026年中大促｜运维实测：376 元得4核4G5M/30 个月](/archives/Tencent-Cloud-promotes-China-in-2026-618)
-
-Next Post [8.8元一瓶的哑铃水，健身的和喝水的都坐不住了](/archives/8.8yuan-yi-ping-de-ya-ling-shui-jian-shen-de-he-he-shui-de-du-zuo-bu-zhu-liao)
 
 * * *
