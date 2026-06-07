@@ -2,8 +2,8 @@
 layout: post
 title: "🔥 腾讯云2026年中大促｜运维实测：376 元得4核4G5M/30 个月"
 date: 2026-06-05
-categories: 默认分类
-tags: []
+categories: 云服务器
+tags: [618]
 ---
 
 腾讯云2026年年中大促（6月1日~6月30日）已经正式开始了。作为运维，我平时最烦的就是“新客才便宜、续费贵到哭”这种套路。但这次腾讯云推出的“别样”无忧实例，确实有点不一样：**新老用户同享** ，而且支持**长期低价续费** ，终于不用再“年抛”了。适合有长期建站、挂脚本、跑测试环境等需求的朋友。
@@ -97,19 +97,3 @@ tags: []
 > 💬 2核4G6M 三年 528元，折合176元/年，**4核4G3M** （40G SSD）99/年这个，特别是4核4G3M（40G SSD）38 抢的这个价格作为运维看了都心动，可惜仅限新用户。如果你符合条件，够用的话**无脑入** 就行。
 > 
 > 💬 376元拿下30个月4核4G5M服务器，折合每年只要150块，每天不到4毛钱。重点是：同价续费+拼团送6个月+免费升级，这套组合拳好像只给了我一个人。其实199确实更有性价比，但188已经够我用了——还要啥自行车？
-
-* * *
-
-[ ](javascript:handleLike\('ce1d9fe7-d814-4573-b0af-1525dd9e4eab'\))
-
-#### Recommended
-
-2025-06-26 [windows、macOS 、android的wireGuard客户端下载安装使用教程](/archives/windows-macOS-android-wireguard-Client-Download-install-and-use-the-tutorial)
-
-2025-06-20 [全场景产品矩阵，支撑 AI 应用全流程落地](/archives/siliconflow)
-
-2025-03-30 [一行代码自动续签ssl证书文件](/archives/ssl-updata)
-
-Next Post [Ghost恢复错误25002？不用加指令，这个方法一次搞定！](/archives/ghosthui-fu-cuo-wu-25002-bu-yong-jia-zhi-ling-zhe-ge-fang-fa-yi-ci-gao-ding)
-
-* * *
