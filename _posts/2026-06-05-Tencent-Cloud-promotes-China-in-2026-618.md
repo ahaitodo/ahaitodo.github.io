@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: mypost
 title: "🔥 腾讯云2026年中大促｜运维实测：376 元得4核4G5M/30 个月"
 date: 2026-06-05
 categories: 云服务器
