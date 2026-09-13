@@ -1,6 +1,30 @@
 {%- assign buildAt = site.time | date: "%Y%m%d%H%M%S" -%}
+{%- assign isPost = false -%}
+{%- if page.layout == "mypost" or page.layout == "post" -%}{%- assign isPost = true -%}{%- endif -%}
+{%- if page.description -%}
+  {%- assign seoDesc = page.description -%}
+{%- elsif isPost -%}
+  {%- assign seoDesc = page.content | strip_html | normalize_whitespace | truncate: 120 -%}
+{%- else -%}
+  {%- assign seoDesc = site.description -%}
+{%- endif -%}
+{%- assign seoDesc = seoDesc | strip | escape -%}
+{%- if page.keywords -%}
+  {%- assign seoKeywords = page.keywords -%}
+{%- elsif isPost -%}
+  {%- assign seoKeywords = site.author -%}
+  {%- for category in page.categories -%}{%- assign seoKeywords = seoKeywords | append: "," | append: category -%}{%- endfor -%}
+  {%- for tag in page.tags -%}{%- assign seoKeywords = seoKeywords | append: "," | append: tag -%}{%- endfor -%}
+{%- else -%}
+  {%- assign seoKeywords = site.keywords -%}
+{%- endif -%}
+{%- assign seoTitle = page.seo_title | default: page.title | strip | escape -%}
 <head>
-  <title>{{ page.title }}-{{ site.title }}</title>
+  {%- if page.seo_title %}
+  <title>{{ page.seo_title | strip | escape }}</title>
+  {%- else %}
+  <title>{{ page.title | strip | escape }}-{{ site.title | escape }}</title>
+  {%- endif %}
   <meta charset="utf-8" />
   <meta http-equiv="content-language" content="zh-CN" />
   <meta name="theme-color" content="#ffffff" />
@@ -10,13 +34,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="applicable-device" content="pc,mobile" />
   <meta name="author" content="{{ site.author }}" />
-  {%- if page.categories %}
-  <meta name="description" content="{{ page.title }}" />
-  <meta name="keywords" content="{{ site.author }}{% for category in page.categories %},{{ category }}{% endfor %}" />
-  {% else %}
-  <meta name="description" content="{{ site.description }}" />
-  <meta name="keywords" content="{{ site.keywords }}" />
-  {% endif -%}
+  <meta name="description" content="{{ seoDesc }}" />
+  <meta name="keywords" content="{{ seoKeywords | strip | escape }}" />
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="{{ site.title | escape }}" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:type" content="{% if isPost %}article{% else %}website{% endif %}" />
+  <meta property="og:title" content="{{ seoTitle }}" />
+  <meta property="og:description" content="{{ seoDesc }}" />
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+  <meta property="og:image" content="{{ site.url }}/static/img/logo.png" />
+  {%- if isPost and page.date %}
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+  <meta property="article:author" content="{{ site.author }}" />
+  {%- endif %}
   <link rel="icon" href="{{site.baseurl}}/static/img/favicon.ico" />
   <link rel="apple-touch-icon" href="{{site.baseurl}}/static/img/logo.png" />
   <link rel="stylesheet" href="{{site.baseurl}}/static/css/common.css?t={{buildAt}}" />
@@ -27,6 +58,40 @@
   <link rel="stylesheet" href="{{site.baseurl}}/static/css/code-light.css?t={{buildAt}}" />
   {%- endif %} {%- if page.layout == "page" %}
   <link rel="stylesheet" href="{{site.baseurl}}/static/css/page.css?t={{buildAt}}" />
+  {%- endif %}
+  {%- if page.url == "/" or page.url == "/index.html" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.title | escape }}",
+    "alternateName": "ahai.cc",
+    "url": "{{ site.url }}/",
+    "inLanguage": "zh-CN",
+    "description": "{{ site.description | escape }}",
+    "author": { "@type": "Person", "name": "{{ site.author }}", "url": "{{ site.url }}/pages/about.html" }
+  }
+  </script>
+  {%- endif %}
+  {%- if isPost %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
+    "url": "{{ site.url }}{{ page.url }}",
+    "headline": "{{ page.title | strip | escape }}",
+    {%- if page.date %}
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "dateModified": "{{ page.date | date_to_xmlschema }}",
+    {%- endif %}
+    "inLanguage": "zh-CN",
+    "keywords": "{{ seoKeywords | strip | escape }}",
+    "description": "{{ seoDesc }}",
+    "image": "{{ site.url }}/static/img/logo.png",
+    "author": { "@type": "Person", "name": "{{ site.author }}", "url": "{{ site.url }}/pages/about.html" }
+  }
+  </script>
   {%- endif %}
   <script>
     window.blog = {

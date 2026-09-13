@@ -1,0 +1,30 @@
+---
+layout: null
+permalink: /llms.txt
+---
+# 阿海的技术博客（ahai.cc）
+
+> 运维工程师阿海的个人技术博客。原创内容涵盖：云服务器优惠实测与选购避坑（腾讯云、阿里云）、运维实战（Proxmox VE 虚拟化、IPMI、H3C 交换机、ElasticSearch 日志收集、系统备份还原）、AI 工具评测（大模型 API、AI 编程、Agent 部署）、电脑技巧（Windows/macOS）、自制在线小工具、建站经验与生活随笔。
+
+站点地址：{{ site.url }}
+关于作者：{{ site.url }}/pages/about.html
+文章分类：{{ site.url }}/pages/categories.html
+RSS 订阅：{{ site.url }}/static/xml/rss.xml
+
+## 内容分类概览
+
+- 云服务器：腾讯云/阿里云优惠活动实测、服务器选购顺序与避坑、续费成本逐轮计算
+- AI工具：大模型 API 实测、AI 编程工具横评与省钱指南、Agent 上云部署
+- 运维实战：PVE 虚拟化、IPMI 带外管理、交换机配置、日志监控大屏、Linux 与系统备份
+- 电脑技巧：Windows 11 激活与系统疑难、macOS 双系统与改键、打印机/显示器/微信备份等日常技巧
+- 实用小工具：作者自制的短网址、极简剪贴板、机号转换、查重号、电子天平记录工具
+- 软件分享：加速软件、系统镜像下载站、VMware 等软件资源推荐
+- 网络相关：WireGuard/L2TP VPN 配置教程、运营商定向流量说明
+- 建站折腾：Halo/Jekyll 博客程序、个人导航页、SSL 证书自动续签、建站套餐
+- 生活随笔：金钱观念、健身、生活记录与个人感想
+
+## 全部文章
+
+{%- for post in site.posts %}
+- [{{ post.title | strip }}]({{ site.url }}{{ post.url }})（{{ post.date | date: "%Y-%m-%d" }}{% for c in post.categories %}，{{ c }}{% endfor %}）
+{%- endfor %}

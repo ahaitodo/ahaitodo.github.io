@@ -5,13 +5,14 @@ plugins:
 
 # SEO相关信息
 title: 阿海的技术博客
-description: 欢迎来到我的技术博客！在这里分享编程技术、开发经验和生活感悟
-keywords: 阿海,Blog,技术博客,Web开发,编程
+description: 阿海的技术博客：一名运维工程师的实战笔记，分享云服务器优惠实测与选购避坑（腾讯云、阿里云）、运维实战经验（PVE虚拟化、IPMI、日志收集、系统备份还原）、AI工具评测、电脑技巧与建站折腾，偶尔写点生活随笔。
+keywords: 阿海,ahai.cc,阿海的技术博客,运维博客,运维实战,云服务器,腾讯云,阿里云,轻量服务器,PVE虚拟化,IPMI,AI工具,AI编程,电脑技巧,建站教程,系统备份
 author: 阿海
 footerText: 'Copyright © 2026'
 
 # 这些不要动
 permalink: /:year/:month/:day/:title.html
+url: 'https://ahai.cc'
 kramdown:
   auto_ids: true
   input: GFM
