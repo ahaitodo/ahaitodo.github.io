@@ -46,3 +46,19 @@
   })();
 </script>
 {%- endif %}
+
+{%- comment -%} 文章内容中的超链接一律新窗口打开 {%- endcomment -%}
+<script>
+;(function () {
+  try {
+    var links = document.querySelectorAll('.post a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var href = (a.getAttribute('href') || '').replace(/^\s+|\s+$/g, '');
+      if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) continue;
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    }
+  } catch (e) {}
+})();
+</script>
