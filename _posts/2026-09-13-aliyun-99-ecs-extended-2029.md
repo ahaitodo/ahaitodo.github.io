@@ -2,7 +2,7 @@
 layout: mypost
 title: "阿里云 99 元 ECS 又延期了：这次到 2029 年 3 月，我拿自己的实例算给你看，最多能用几年？"
 date: 2026-09-13
-categories: 默认分类
+categories: 云服务器
 tags: []
 ---
 

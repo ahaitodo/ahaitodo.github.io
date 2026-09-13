@@ -2,7 +2,7 @@
 layout: post
 title: "MAC系统+windows系统连接L2TP-VPN的步骤"
 date: 2025-01-25
-categories: 默认分类
+categories: 网络相关
 tags: []
 ---
 

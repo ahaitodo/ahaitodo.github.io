@@ -2,7 +2,7 @@
 layout: post
 title: "用DiskGenius备份还原windows系统分区"
 date: 2025-08-10
-categories: 默认分类
+categories: 运维实战
 tags: []
 ---
 

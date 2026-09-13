@@ -2,7 +2,7 @@
 layout: mypost
 title: "我的第N篇博客"
 date: 2026-01-29 10:00:00 +0800
-categories: 随笔
+categories: 生活随笔
 ---
 
 ## 🎉 开始写博客了！

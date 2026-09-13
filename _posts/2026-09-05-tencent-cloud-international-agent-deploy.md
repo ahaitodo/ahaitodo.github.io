@@ -2,7 +2,7 @@
 layout: mypost
 title: "出海部署 AI Agent：腾讯云国际站轻量服务器 $1.68/月起，WorkBuddy + TokenHub 组合上手指南"
 date: 2026-09-05
-categories: 默认分类
+categories: 云服务器
 tags: []
 ---
 

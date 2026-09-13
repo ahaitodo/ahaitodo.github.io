@@ -2,7 +2,7 @@
 layout: mypost
 title: "AI 焕新 智启新局：跑 AI 应用上云还是自己部署？一笔电费账算给你看"
 date: 2026-09-04
-categories: 默认分类
+categories: 云服务器
 tags: []
 ---
 

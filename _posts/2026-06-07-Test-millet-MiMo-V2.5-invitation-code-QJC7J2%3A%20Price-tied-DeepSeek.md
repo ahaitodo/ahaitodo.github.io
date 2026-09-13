@@ -2,7 +2,7 @@
 layout: mypost
 title: "测小米MiMo V2.5邀请码QJC7J2：价格打平DeepSeek"
 date: 2026-06-07
-categories: 默认分类
+categories: AI工具
 tags: [AI Agent, Token, ai]
 ---
 

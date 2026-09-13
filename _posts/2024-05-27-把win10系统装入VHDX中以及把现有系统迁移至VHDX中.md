@@ -3,7 +3,7 @@ layout: mypost
 author: 三九二七
 title: "把win10系统装入VHDX中以及把现有系统迁移至VHDX中"
 date: 2024-05-27 00:00:00 +0800
-categories: 工作
+categories: 运维实战
 ---
 
 ### 把win10系统装入VHDX中

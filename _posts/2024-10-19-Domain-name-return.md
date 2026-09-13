@@ -3,7 +3,7 @@ layout: mypost
 author: 阿海
 title: "失而复得"
 date: 2024-10-19 16:31:18 +0800
-categories: 随笔
+categories: 生活随笔
 ---
 
 　　无意中发现，ahai.cc别人上架卖了，而且价格不算太高，没有多想就付款买下来了。

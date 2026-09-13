@@ -2,7 +2,7 @@
 layout: mypost
 title: "腾讯云轻量服务器六周年庆：老用户续费低至1折，错过再等一年"
 date: 2026-09-02
-categories: 默认分类
+categories: 云服务器
 tags: [腾讯云, 轻量服务器]
 ---
 

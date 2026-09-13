@@ -2,7 +2,7 @@
 layout: post
 title: "windows、macOS 、android的wireGuard客户端下载安装使用教程"
 date: 2025-06-26
-categories: 默认分类
+categories: 网络相关
 tags: []
 ---
 

@@ -3,7 +3,7 @@ layout: mypost
 author: 阿海
 title: "域名上架，结果给人买了"
 date: 2020-09-23 16:31:18 +0800
-categories: 随笔
+categories: 生活随笔
 ---
 
 　　一条短信发来：域名交易成功[一口价]ahai.cc入款(2800.00)，

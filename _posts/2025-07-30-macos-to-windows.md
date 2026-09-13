@@ -2,7 +2,7 @@
 layout: post
 title: "苹果mac mini主机安装windows10/11"
 date: 2025-07-30
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

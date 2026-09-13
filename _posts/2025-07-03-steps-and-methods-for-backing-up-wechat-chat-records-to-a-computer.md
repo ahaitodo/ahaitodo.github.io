@@ -2,7 +2,7 @@
 layout: post
 title: "手机微信100多G聊天记录，备份到电脑的步骤方法"
 date: 2025-07-03
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

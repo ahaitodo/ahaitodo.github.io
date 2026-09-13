@@ -3,7 +3,7 @@ layout: mypost
 author: 三九二七
 title: "Proxmox VE 删除节点下的VM"
 date: 2021-12-28 00:00:00 +0800
-categories: 工作
+categories: 运维实战
 ---
 
 mv /etc/pve/nodes/nodename /root/nodename

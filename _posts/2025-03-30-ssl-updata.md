@@ -2,7 +2,7 @@
 layout: post
 title: "一行代码自动续签ssl证书文件"
 date: 2025-03-30
-categories: 默认分类
+categories: 建站折腾
 tags: []
 ---
 

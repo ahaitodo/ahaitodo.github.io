@@ -2,7 +2,7 @@
 layout: post
 title: "windows无法进系统的一个原因"
 date: 2026-04-26
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "mac OS 把Command/win键换成 ctrl键"
 date: 2025-07-25
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

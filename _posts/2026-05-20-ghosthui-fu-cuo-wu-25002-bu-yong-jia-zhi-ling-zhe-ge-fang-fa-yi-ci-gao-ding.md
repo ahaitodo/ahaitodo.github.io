@@ -2,7 +2,7 @@
 layout: mypost
 title: "Ghost恢复错误25002？不用加指令，这个方法一次搞定！"
 date: 2026-05-20
-categories: 默认分类
+categories: 电脑技巧
 tags: [ghost]
 ---
 

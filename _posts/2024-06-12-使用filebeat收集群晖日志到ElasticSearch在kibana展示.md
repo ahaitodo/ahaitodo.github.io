@@ -3,7 +3,7 @@ layout: mypost
 author: 三九二七
 title: "使用filebeat收集群晖日志到ElasticSearch在kibana展示"
 date: 2024-06-12 00:00:00 +0800
-categories: 工作
+categories: 运维实战
 ---
 
 在ubuntu2204-1单机部署ElasticSearch

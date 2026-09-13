@@ -2,7 +2,7 @@
 layout: post
 title: "Markdown做数据表格批理在每行前插入“|”"
 date: 2026-02-25
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "全场景产品矩阵，支撑 AI 应用全流程落地"
 date: 2025-06-20
-categories: 默认分类
+categories: AI工具
 tags: []
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "AI 编程工具涨价潮下，轻量开发者的省钱生存指南"
 date: 2026-04-11
-categories: 默认分类
+categories: AI工具
 tags: []
 ---
 

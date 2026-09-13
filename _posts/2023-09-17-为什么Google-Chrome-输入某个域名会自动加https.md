@@ -3,7 +3,7 @@ layout: mypost
 author: 三九二七
 title: "为什么Google Chrome，输入某个域名会自动加https？"
 date: 2023-09-17 00:00:00 +0800
-categories: 分享
+categories: 电脑技巧
 ---
 
 Google Chrome 浏览器有一个功能叫做 "HSTS" (HTTP Strict Transport Security)，

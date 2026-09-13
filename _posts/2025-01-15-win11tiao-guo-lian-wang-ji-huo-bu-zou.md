@@ -2,7 +2,7 @@
 layout: post
 title: "win11跳过联网激活步骤"
 date: 2025-01-15
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

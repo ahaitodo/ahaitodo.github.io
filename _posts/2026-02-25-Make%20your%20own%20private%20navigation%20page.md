@@ -2,7 +2,7 @@
 layout: post
 title: "自己动手做一个私人导航主页"
 date: 2026-02-25
-categories: 默认分类
+categories: 建站折腾
 tags: []
 ---
 

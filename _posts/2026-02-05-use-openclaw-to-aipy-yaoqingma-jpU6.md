@@ -2,7 +2,7 @@
 layout: post
 title: "干活牛马，除了openclaw还有国产的这款工具能帮你更快干活"
 date: 2026-02-05
-categories: 默认分类
+categories: AI工具
 tags: []
 ---
 

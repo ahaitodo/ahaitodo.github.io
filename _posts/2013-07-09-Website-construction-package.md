@@ -3,7 +3,7 @@ layout: mypost
 author: 阿海
 title: "网站建设套餐"
 date: 2013-07-09 16:31:18 +0800
-categories: 服务
+categories: 建站折腾
 ---
 
 ##网站建设套餐

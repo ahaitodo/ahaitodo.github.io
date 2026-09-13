@@ -2,7 +2,7 @@
 layout: post
 title: "龙虾OpenClaw”只是智能经济的开胃菜"
 date: 2026-03-16
-categories: 默认分类
+categories: AI工具
 tags: []
 ---
 

@@ -2,7 +2,7 @@
 layout: mypost
 title: "第一台腾讯云服务器怎么买最省？轻量/CVM 选购顺序与避坑指南"
 date: 2026-09-03
-categories: 默认分类
+categories: 云服务器
 tags: []
 ---
 

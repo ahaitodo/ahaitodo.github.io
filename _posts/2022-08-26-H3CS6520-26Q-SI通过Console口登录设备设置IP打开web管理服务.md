@@ -3,7 +3,7 @@ layout: mypost
 author: 三九二七
 title: "H3CS6520-26Q-SI通过Console口登录设备设置IP打开web管理服务"
 date: 2022-08-26 00:00:00 +0800
-categories: 工作
+categories: 运维实战
 ---
 
 一、连接

@@ -2,7 +2,7 @@
 layout: post
 title: "windows快速导出导入打印机"
 date: 2025-09-18
-categories: 默认分类
+categories: 电脑技巧
 tags: []
 ---
 

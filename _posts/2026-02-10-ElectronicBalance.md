@@ -2,7 +2,7 @@
 layout: post
 title: "告别手写抄！这个电子天平小工具，让我每天准点下班"
 date: 2026-02-10
-categories: 默认分类
+categories: 实用小工具
 tags: []
 ---
 

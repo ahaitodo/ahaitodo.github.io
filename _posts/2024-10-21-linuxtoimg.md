@@ -2,7 +2,7 @@
 layout: post
 title: "记录一下，linux全盘备份的两个方法"
 date: 2024-10-21
-categories: 默认分类
+categories: 运维实战
 tags: []
 ---
 
