@@ -138,11 +138,16 @@ OpenClaw主要停留在电脑端的浏览器、文件操作层面。而爱派呢
 
 现在注册，使用我的专属邀请码：**jpU6** 立即获得 **2,000,000 Tokens** 额外奖励！
 
-**使用方式：**
+**注册方式：**
 
 ① 进入爱派官网：[https://www.aipyaipy.com](https://www.aipyaipy.com/) 下载最新版客户端
 
 ② 注册登录时填写邀请码 **jpU6** 即可
+给你推荐【爱派AiPy-章鱼哥】AI助手软件，不用懂技术，只要会打字，它就能替你干活。
+编EXE软件、写小说、分析复杂数据、处理文档、做教育课件、生成PPT、控制浏览器爬数据都可以。
+现在使用我给你的专属链接下载安装注册，就能获得 2,500 灵石 的免费额度：
+[https://promo.aipyaipy.com/?referral=aipy_B9D4](https://promo.aipyaipy.com/?referral=aipy_B9D4)
+在安装后首次注册用户的界面上，务必确保邀请码项已自动填写为B9D4，如果没有可以手动填写。
 
 Windows、Mac、Linux都能用，完全本地部署，数据安全有保障
 
