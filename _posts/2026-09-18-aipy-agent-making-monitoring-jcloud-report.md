@@ -96,9 +96,9 @@ AI助手软件，不用懂技术，只要会打字，它就能替你干活。
 
 现在使用我给你的专属链接下载安装注册，就能获得 2,500 灵石 的免费额度：
 
-[https://promo.aipyaipy.com/?referral=aipy_jpU6](https://promo.aipyaipy.com/?referral=aipy_jpU6)
+[https://promo.aipyaipy.com/?referral=aipy_B9D4](https://promo.aipyaipy.com/?referral=aipy_B9D4)
 
-在安装后首次注册用户的界面上，务必确保邀请码项已自动填写为jpU6，如果没有可以手动填写。
+在安装后首次注册用户的界面上，务必确保邀请码项已自动填写为B9D4，如果没有可以手动填写。
 
 ### 此文章也是它aipy写的
 
