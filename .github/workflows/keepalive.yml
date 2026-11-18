@@ -9,17 +9,29 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping weeny app /health
+      - name: Ping weeny apps /health
         run: |
-          set -euo pipefail
-          URL="https://hello-weeny-1vb9.onweeny.com/health"
-          for i in 1 2 3; do
-            echo "ping $i: $URL"
-            if curl -fsS --max-time 25 "$URL"; then
-              echo "keep-alive OK"
-              exit 0
-            fi
-            sleep 10
+          set -uo pipefail
+          URLS=(
+            "https://h-d00s.onweeny.com/health"
+            "https://ahai-3qd7.onweeny.com/health"
+          )
+          ok=0
+          for URL in "${URLS[@]}"; do
+            for i in 1 2 3; do
+              echo "ping $i: $URL"
+              if curl -fsS --max-time 25 "$URL"; then
+                echo "keep-alive OK: $URL"
+                ok=$((ok+1))
+                break
+              fi
+              sleep 10
+            done
           done
-          echo "keep-alive failed after 3 attempts"
-          exit 1
+          echo "healthy endpoints: $ok/${#URLS[@]}"
+          # The goal is to wake the shared server: one successful request is enough.
+          # Only fail when every endpoint is unreachable.
+          if [ "$ok" -eq 0 ]; then
+            echo "keep-alive failed for all endpoints"
+            exit 1
+          fi
