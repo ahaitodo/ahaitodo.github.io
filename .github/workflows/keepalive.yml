@@ -1,0 +1,25 @@
+name: Keep weeny awake
+on:
+  schedule:
+    # Every 25 minutes. GitHub cron is UTC; delayed runs are normal on busy days.
+    - cron: '*/25 * * * *'
+  workflow_dispatch:
+permissions: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping weeny app /health
+        run: |
+          set -euo pipefail
+          URL="https://hello-weeny-1vb9.onweeny.com/health"
+          for i in 1 2 3; do
+            echo "ping $i: $URL"
+            if curl -fsS --max-time 25 "$URL"; then
+              echo "keep-alive OK"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "keep-alive failed after 3 attempts"
+          exit 1
